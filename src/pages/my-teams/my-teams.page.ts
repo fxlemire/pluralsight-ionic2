@@ -7,7 +7,7 @@ import {TournamentsPage} from '../pages';
   templateUrl: 'my-teams.page.html'
 })
 export class MyTeamsPage {
-  constructor(private navCtrl: NavController){}
+  constructor(public navCtrl: NavController){}
 
   goToTournaments() {
     this.navCtrl.push(TournamentsPage);

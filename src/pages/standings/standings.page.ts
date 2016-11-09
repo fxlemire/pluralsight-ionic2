@@ -7,6 +7,6 @@ import { NavController } from 'ionic-angular';
 })
 export class StandingsPage {
 
-  constructor(private navCtrl: NavController) {}
+  constructor(public navCtrl: NavController) {}
 
 }
