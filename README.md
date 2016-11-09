@@ -13,13 +13,19 @@ This is the base template for Ionic 2 starter apps.
 You'll need the Ionic CLI with support for v2 apps:
 
 ```bash
-$ npm install -g ionic
+$ npm install -g ionic cordova
 ```
 
 Then run:
 
 ```bash
-$ ionic start myApp
+$ ionic start ionic2-app-base
+```
+
+or
+
+```bash
+$ ionic serve
 ```
 
 More info on this can be found on the Ionic [Getting Started](http://ionicframework.com/docs/v2/getting-started/) page.
