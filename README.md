@@ -19,7 +19,7 @@ $ npm install -g ionic cordova
 Then run:
 
 ```bash
-$ ionic start ionic2-app-base
+$ ionic start elite-schedule-app sidemenu --v2 --ts
 ```
 
 or
@@ -29,3 +29,18 @@ $ ionic serve
 ```
 
 More info on this can be found on the Ionic [Getting Started](http://ionicframework.com/docs/v2/getting-started/) page.
+
+## Running on Android
+
+```bash
+$ ionic run android
+```
+
+### Debugging using logcat
+
+```bash
+$ adb devices
+$ adb -s [device number] shell ps | grep ionic
+$ adb -s [device number] shell ps | grep [process number (2nd entry)] #make sure it's a single process
+$ aadb -s [device number] shell logcat -v time | grep [process number]
+```

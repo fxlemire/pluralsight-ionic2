@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { LoadingController, NavController } from 'ionic-angular';
-import { MyTeamsPage, TeamsPage } from '../pages';
 
+import { TeamsPage } from '../pages';
 import { EliteApi } from '../../shared/shared';
 
 @Component({
@@ -23,7 +23,6 @@ export class TournamentsPage {
   ionViewDidLoad() {
     const loader = this.loadingCtrl.create({
       content: 'Getting tournaments...'
-      // spinner: 'dots'
     });
 
     loader.present().then(() => {
