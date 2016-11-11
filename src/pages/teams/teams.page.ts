@@ -13,12 +13,14 @@ import _ from 'lodash';
 export class TeamsPage {
   private allTeams: any;
   private allTeamDivisions: any;
+  queryText: string = '';
   teams = [];
 
-  constructor(public loadingCtrl: LoadingController,
-    public navCtrl: NavController,
-    public navParams: NavParams,
-    public eliteApi: EliteApi) {}
+  constructor(
+      public loadingCtrl: LoadingController,
+      public navCtrl: NavController,
+      public navParams: NavParams,
+      public eliteApi: EliteApi) {}
 
   itemTapped($event, team) {
     this.navCtrl.push(TeamHomePage, team);
@@ -44,5 +46,23 @@ export class TeamsPage {
 
       loader.dismiss();
     });
+  }
+
+  updateTeams() {
+    const queryTextLower = this.queryText.toLowerCase();
+    const filteredTeams = [];
+
+    _.forEach(this.allTeamDivisions, td => {
+      const teams = _.filter(td.divisionTeams, t => (<any>t).name.toLowerCase().includes(queryTextLower));
+
+      if (teams.length) {
+        filteredTeams.push({
+          divisionName: td.divisionName,
+          divisionTeams: teams
+        });
+      }
+    });
+
+    this.teams = filteredTeams;
   }
 }

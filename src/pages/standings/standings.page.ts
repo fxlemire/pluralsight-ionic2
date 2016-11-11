@@ -11,25 +11,39 @@ import _ from 'lodash';
 })
 export class StandingsPage {
   allStandings: any[];
+  divisionFilter = 'division';
   standings: any[];
   team: any;
 
-  constructor(public navCtrl: NavController,
-    public navParams: NavParams,
-    public eliteApi: EliteApi) {}
+  constructor(
+      public navCtrl: NavController,
+      public navParams: NavParams,
+      public eliteApi: EliteApi) {}
 
-    ionViewDidLoad() {
-      this.team = this.navParams.data;
-      const tournamentData = this.eliteApi.getCurrentTournament();
-      this.standings = tournamentData.standings;
+  ionViewDidLoad() {
+    this.team = this.navParams.data;
+    const tournamentData = this.eliteApi.getCurrentTournament();
+    this.standings = tournamentData.standings;
+    this.allStandings = tournamentData.standings;
 
-      this.allStandings = _.chain(this.standings)
-        .groupBy('division')
-        .toPairs()
-        .map(item => _.zipObject(['divisionName', 'divisionStandings'], item))
-        .value();
+    this.filterDivision();
+  }
 
-      console.log(this.standings);
-      console.log(this.allStandings);
+  getHeader(record, recordIndex, records) {
+    let division = null;
+
+    if (recordIndex === 0 || record.division !== records[recordIndex - 1].division) {
+      division = record.division;
     }
+
+    return division;
+  }
+
+  filterDivision() {
+    if (this.divisionFilter === 'all') {
+      this.standings = this.allStandings;
+    } else {
+      this.standings = _.filter(this.allStandings, s => s.division === this.team.division);
+    }
+  }
 }

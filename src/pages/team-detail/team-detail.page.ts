@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { AlertController, NavController, NavParams, ToastController } from 'ionic-angular';
 
 import { GamePage } from '../pages';
-import { EliteApi } from '../../shared/shared';
+import { EliteApi, UserSettings } from '../../shared/shared';
 
 import _ from 'lodash';
 import moment from 'moment';
@@ -23,11 +23,16 @@ export class TeamDetailPage {
   private tournamentData: any;
 
   constructor(
-    public alertCtrl: AlertController,
-    public navCtrl: NavController,
-    public navParams: NavParams,
-    public toastCtrl: ToastController,
-    public eliteApi: EliteApi) {
+      public alertCtrl: AlertController,
+      public navCtrl: NavController,
+      public navParams: NavParams,
+      public toastCtrl: ToastController,
+      public eliteApi: EliteApi,
+      public userSettings: UserSettings) {
+    this.ionViewDidLoad();
+  }
+
+  ionViewDidLoad() {
     this.team = this.navParams.data;
     this.tournamentData = this.eliteApi.getCurrentTournament();
 
@@ -52,6 +57,7 @@ export class TeamDetailPage {
 
     this.allGames = this.games;
     this.teamStanding = _.find(this.tournamentData.standings, {'teamId': this.team.id});
+    this.userSettings.isFavoriteTeam(this.team.id).then(value => this.isFollowing = value);
   }
 
   getScoreDisplay(isTeam1, team1Score, team2Score) {
@@ -95,7 +101,7 @@ export class TeamDetailPage {
             text: 'Yes',
             handler: () => {
               this.isFollowing = false;
-              // TODO: persis data
+              this.userSettings.unfavoriteTeam(this.team);
 
               const toast = this.toastCtrl.create({
                 message: 'You have unfollowed this team.',
@@ -113,7 +119,17 @@ export class TeamDetailPage {
       confirm.present();
     } else {
       this.isFollowing = true;
-      // TODO: persist data
+      this.userSettings.favoriteTeam(
+        this.team,
+        this.tournamentData.tournament.id,
+        this.tournamentData.tournament.name);
     }
+  }
+
+  refreshAll(refresher) {
+    this.eliteApi.refreshCurrentTournament().subscribe(() => {
+      refresher.complete();
+      this.ionViewDidLoad();
+    });
   }
 }

@@ -11,9 +11,10 @@ import { EliteApi } from '../../shared/shared';
 export class TournamentsPage {
   tournaments: any;
 
-  constructor(public navCtrl: NavController,
-    public eliteApi: EliteApi,
-    public loadingCtrl: LoadingController) {}
+  constructor(
+      public navCtrl: NavController,
+      public eliteApi: EliteApi,
+      public loadingCtrl: LoadingController) {}
 
   itemTapped($event, tournament) {
     this.navCtrl.push(TeamsPage, tournament);
