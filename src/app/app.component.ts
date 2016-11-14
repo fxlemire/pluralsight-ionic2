@@ -12,7 +12,7 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   favoriteTeams: any[];
-  rootPage: any = MyTeamsPage;
+  rootPage: any;
 
   constructor(
       public events: Events,
@@ -28,10 +28,13 @@ export class MyApp {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       StatusBar.styleDefault();
-      this.refreshFavorites();
       Splashscreen.hide();
 
-      this.events.subscribe('favorites:changed', () => this.refreshFavorites());
+      this.userSettings.initStorage().then(() => {
+        this.rootPage = MyTeamsPage;
+        this.refreshFavorites();
+        this.events.subscribe('favorites:changed', () => this.refreshFavorites());
+      });
     });
   }
 

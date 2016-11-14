@@ -42,5 +42,5 @@ $ ionic run android
 $ adb devices
 $ adb -s [device number] shell ps | grep ionic
 $ adb -s [device number] shell ps | grep [process number (2nd entry)] #make sure it's a single process
-$ aadb -s [device number] shell logcat -v time | grep [process number]
+$ adb -s [device number] shell logcat -v time | grep [process number]
 ```

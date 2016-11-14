@@ -41,6 +41,7 @@
     "cordova-plugin-device",
     "cordova-plugin-splashscreen",
     "cordova-plugin-whitelist",
-    "ionic-plugin-keyboard"
+    "ionic-plugin-keyboard",
+    "cordova-sqlite-storage"
   ]
 }
